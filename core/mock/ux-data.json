@@ -1,0 +1,1644 @@
+{
+    "home": {
+        "id": "atlas_home",
+        "mode": "home",
+        "health": {
+            "status": "ok",
+            "attentionLevel": "low",
+            "message": "System operational"
+        },
+        "context": {
+            "timeOfDay": "morning",
+            "simulatedTime": "08:15",
+            "occupiedRooms": [
+                "kitchen",
+                "bathroom_main"
+            ],
+            "quietHours": false,
+            "guestsPresent": false
+        }
+    },
+    "rooms": [
+        {
+            "id": "living_room",
+            "name": "Living Room",
+            "type": "living",
+            "activityState": "idle",
+            "focusPriority": "normal",
+            "health": {
+                "status": "ok",
+                "message": "Optimal"
+            },
+            "sensors": {
+                "temperature": "21°C",
+                "humidity": "45%",
+                "occupied": false,
+                "lux": "450"
+            }
+        },
+        {
+            "id": "kitchen",
+            "name": "Kitchen",
+            "type": "kitchen",
+            "activityState": "active",
+            "focusPriority": "focus",
+            "health": {
+                "status": "ok",
+                "message": "Busy"
+            },
+            "sensors": {
+                "temperature": "22.5°C",
+                "humidity": "55%",
+                "occupied": true,
+                "lux": "600",
+                "co2": "850ppm"
+            }
+        },
+        {
+            "id": "bedroom_master",
+            "name": "Master Bedroom",
+            "type": "bedroom",
+            "activityState": "quiet",
+            "focusPriority": "background",
+            "health": {
+                "status": "ok",
+                "message": "Fresh"
+            },
+            "sensors": {
+                "temperature": "19.5°C",
+                "humidity": "48%",
+                "occupied": false,
+                "lux": "200"
+            }
+        },
+        {
+            "id": "bathroom_main",
+            "name": "Main Bathroom",
+            "type": "bathroom",
+            "activityState": "active",
+            "focusPriority": "high",
+            "health": {
+                "status": "ok",
+                "message": "Humid"
+            },
+            "sensors": {
+                "temperature": "23°C",
+                "humidity": "65%",
+                "occupied": true
+            }
+        },
+        {
+            "id": "hallway",
+            "name": "Hallway",
+            "type": "hallway",
+            "activityState": "transition",
+            "focusPriority": "background",
+            "health": {
+                "status": "ok",
+                "message": "Clear"
+            },
+            "sensors": {
+                "temperature": "20°C",
+                "occupied": true
+            }
+        },
+        {
+            "id": "office",
+            "name": "Home Office",
+            "type": "office",
+            "activityState": "idle",
+            "focusPriority": "focus",
+            "health": {
+                "status": "ok",
+                "message": "Ready"
+            },
+            "sensors": {
+                "temperature": "21°C",
+                "humidity": "40%",
+                "occupied": false,
+                "co2": "450ppm"
+            }
+        },
+        {
+            "id": "kids_room",
+            "name": "Kids Room",
+            "type": "bedroom",
+            "activityState": "idle",
+            "focusPriority": "normal",
+            "health": {
+                "status": "ok",
+                "message": "Tidy"
+            },
+            "sensors": {
+                "temperature": "21°C",
+                "occupied": false
+            }
+        },
+        {
+            "id": "balcony",
+            "name": "Balcony",
+            "type": "outdoor",
+            "activityState": "idle",
+            "focusPriority": "low",
+            "health": {
+                "status": "ok",
+                "message": "Breezy"
+            },
+            "sensors": {
+                "temperature": "18°C",
+                "humidity": "60%",
+                "lux": "1200"
+            }
+        },
+        {
+            "id": "utility_room",
+            "name": "Utility Room",
+            "type": "utility",
+            "activityState": "industrial",
+            "focusPriority": "low",
+            "health": {
+                "status": "ok",
+                "message": "Functional"
+            },
+            "sensors": {
+                "temperature": "19°C",
+                "occupied": false,
+                "leak": "dry"
+            }
+        }
+    ],
+    "things": [
+        {
+            "id": "light_living_main",
+            "name": "Living Ceiling",
+            "roomId": "living_room",
+            "capabilities": [
+                "light",
+                "dimmable"
+            ],
+            "state": {
+                "operational": "off",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "0%"
+            },
+            "controlIntent": [
+                "toggle",
+                "dim"
+            ],
+            "explain": {
+                "reason": "Daylight is sufficient",
+                "source": "automation",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_living_ambient",
+            "name": "TV Strip",
+            "roomId": "living_room",
+            "capabilities": [
+                "light",
+                "color"
+            ],
+            "state": {
+                "operational": "off",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "0%",
+                "color": "warm_white"
+            },
+            "controlIntent": [
+                "toggle",
+                "color"
+            ],
+            "explain": {
+                "reason": "Not active during day",
+                "source": "automation",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_living_read",
+            "name": "Reading Lamp",
+            "roomId": "living_room",
+            "capabilities": [
+                "light"
+            ],
+            "state": {
+                "operational": "off",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "0%"
+            },
+            "controlIntent": [
+                "toggle"
+            ],
+            "explain": {
+                "reason": "Manual control only",
+                "source": "user",
+                "override": "none"
+            }
+        },
+        {
+            "id": "media_living_tv",
+            "name": "Samsung TV",
+            "roomId": "living_room",
+            "capabilities": [
+                "media",
+                "play_control"
+            ],
+            "state": {
+                "operational": "idle",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "status": "standby"
+            },
+            "controlIntent": [
+                "play",
+                "pause"
+            ],
+            "explain": {
+                "reason": "Waiting for input",
+                "source": "device",
+                "override": "none"
+            }
+        },
+        {
+            "id": "media_living_soundbar",
+            "name": "Sonos Beam",
+            "roomId": "living_room",
+            "capabilities": [
+                "media",
+                "volume"
+            ],
+            "state": {
+                "operational": "idle",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "volume": "20"
+            },
+            "controlIntent": [
+                "volume_up",
+                "volume_down"
+            ],
+            "explain": {
+                "reason": "Linked to TV",
+                "source": "automation",
+                "override": "none"
+            }
+        },
+        {
+            "id": "sensor_living_temp",
+            "name": "Living Climate",
+            "roomId": "living_room",
+            "capabilities": [
+                "climate",
+                "sensor"
+            ],
+            "state": {
+                "operational": "idle",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "temp": "21°C",
+                "humidity": "45%"
+            },
+            "controlIntent": [],
+            "explain": {
+                "reason": "Monitoring comfortably",
+                "source": "sensor",
+                "override": "none"
+            }
+        },
+        {
+            "id": "cover_living_blind",
+            "name": "Main Blinds",
+            "roomId": "living_room",
+            "capabilities": [
+                "cover",
+                "position"
+            ],
+            "state": {
+                "operational": "open",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "position": "100%"
+            },
+            "controlIntent": [
+                "open",
+                "close",
+                "set_position"
+            ],
+            "explain": {
+                "reason": "Letting in daylight",
+                "source": "schedule",
+                "override": "none"
+            }
+        },
+        {
+            "id": "appliance_coffee",
+            "name": "Espresso Machine",
+            "roomId": "kitchen",
+            "capabilities": [
+                "appliance",
+                "heat"
+            ],
+            "state": {
+                "operational": "busy",
+                "health": "ok",
+                "attention": "medium"
+            },
+            "readings": {
+                "status": "heating",
+                "temp": "92°C"
+            },
+            "controlIntent": [
+                "brew_espresso",
+                "brew_lungo"
+            ],
+            "explain": {
+                "reason": "Morning routine active",
+                "source": "automation",
+                "override": "none"
+            }
+        },
+        {
+            "id": "appliance_dishwasher",
+            "name": "Dishwasher",
+            "roomId": "kitchen",
+            "capabilities": [
+                "appliance",
+                "state_read"
+            ],
+            "state": {
+                "operational": "idle",
+                "health": "ok",
+                "attention": "low"
+            },
+            "readings": {
+                "status": "clean",
+                "last_run": "Yesterday"
+            },
+            "controlIntent": [
+                "start_eco"
+            ],
+            "explain": {
+                "reason": "Dishes ready to unload",
+                "source": "device",
+                "override": "none"
+            }
+        },
+        {
+            "id": "appliance_fridge",
+            "name": "Smart Fridge",
+            "roomId": "kitchen",
+            "capabilities": [
+                "appliance",
+                "cooling"
+            ],
+            "state": {
+                "operational": "on",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "temp_main": "3°C",
+                "temp_freezer": "-18°C"
+            },
+            "controlIntent": [
+                "set_temp"
+            ],
+            "explain": {
+                "reason": "Optimal cooling",
+                "source": "system",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_kitchen_main",
+            "name": "Kitchen Spots",
+            "roomId": "kitchen",
+            "capabilities": [
+                "light",
+                "dimmable"
+            ],
+            "state": {
+                "operational": "on",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "80%"
+            },
+            "controlIntent": [
+                "toggle",
+                "dim"
+            ],
+            "explain": {
+                "reason": "Activity detected",
+                "source": "sensor",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_kitchen_strip",
+            "name": "Counter LEDs",
+            "roomId": "kitchen",
+            "capabilities": [
+                "light",
+                "color"
+            ],
+            "state": {
+                "operational": "on",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "100%",
+                "color": "cool_white"
+            },
+            "controlIntent": [
+                "toggle",
+                "color"
+            ],
+            "explain": {
+                "reason": "Cooking focus",
+                "source": "scene",
+                "override": "none"
+            }
+        },
+        {
+            "id": "sensor_kitchen_smoke",
+            "name": "Smoke Detector",
+            "roomId": "kitchen",
+            "capabilities": [
+                "sensor",
+                "safety"
+            ],
+            "state": {
+                "operational": "idle",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "smoke": "clear"
+            },
+            "controlIntent": [
+                "test"
+            ],
+            "explain": {
+                "reason": "Safety check pass",
+                "source": "system",
+                "override": "none"
+            }
+        },
+        {
+            "id": "sensor_kitchen_leak",
+            "name": "Sink Leak Sensor",
+            "roomId": "kitchen",
+            "capabilities": [
+                "sensor",
+                "safety"
+            ],
+            "state": {
+                "operational": "idle",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "water": "none"
+            },
+            "controlIntent": [],
+            "explain": {
+                "reason": "Dry",
+                "source": "sensor",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_bedroom_main",
+            "name": "Master Ceiling",
+            "roomId": "bedroom_master",
+            "capabilities": [
+                "light",
+                "dimmable"
+            ],
+            "state": {
+                "operational": "off",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "0%"
+            },
+            "controlIntent": [
+                "toggle"
+            ],
+            "explain": {
+                "reason": "Room unoccupied",
+                "source": "automation",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_bedroom_left",
+            "name": "Pavel's Lamp",
+            "roomId": "bedroom_master",
+            "capabilities": [
+                "light",
+                "dimmable"
+            ],
+            "state": {
+                "operational": "off",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "0%"
+            },
+            "controlIntent": [
+                "toggle",
+                "dim"
+            ],
+            "explain": {
+                "reason": "Off",
+                "source": "user",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_bedroom_right",
+            "name": "Jana's Lamp",
+            "roomId": "bedroom_master",
+            "capabilities": [
+                "light",
+                "dimmable"
+            ],
+            "state": {
+                "operational": "off",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "0%"
+            },
+            "controlIntent": [
+                "toggle",
+                "dim"
+            ],
+            "explain": {
+                "reason": "Off",
+                "source": "user",
+                "override": "none"
+            }
+        },
+        {
+            "id": "climate_ac_bedroom",
+            "name": "AC Unit",
+            "roomId": "bedroom_master",
+            "capabilities": [
+                "climate",
+                "cool",
+                "fan"
+            ],
+            "state": {
+                "operational": "idle",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "mode": "eco",
+                "temp": "21°C"
+            },
+            "controlIntent": [
+                "set_temp",
+                "set_mode"
+            ],
+            "explain": {
+                "reason": "Temp ideal",
+                "source": "thermostat",
+                "override": "none"
+            }
+        },
+        {
+            "id": "cover_bedroom_blackout",
+            "name": "Blackout Curtains",
+            "roomId": "bedroom_master",
+            "capabilities": [
+                "cover",
+                "position"
+            ],
+            "state": {
+                "operational": "open",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "position": "100%"
+            },
+            "controlIntent": [
+                "open",
+                "close"
+            ],
+            "explain": {
+                "reason": "Morning wakeup",
+                "source": "schedule",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_bath_main",
+            "name": "Bathroom Main",
+            "roomId": "bathroom_main",
+            "capabilities": [
+                "light"
+            ],
+            "state": {
+                "operational": "on",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "100%"
+            },
+            "controlIntent": [
+                "toggle"
+            ],
+            "explain": {
+                "reason": "Occupied",
+                "source": "sensor",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_bath_mirror",
+            "name": "Mirror Light",
+            "roomId": "bathroom_main",
+            "capabilities": [
+                "light",
+                "color"
+            ],
+            "state": {
+                "operational": "on",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "100%",
+                "color": "daylight"
+            },
+            "controlIntent": [
+                "toggle",
+                "color"
+            ],
+            "explain": {
+                "reason": "Makeup mode",
+                "source": "scene",
+                "override": "none"
+            }
+        },
+        {
+            "id": "climate_bath_floor",
+            "name": "Floor Heating",
+            "roomId": "bathroom_main",
+            "capabilities": [
+                "climate",
+                "heat"
+            ],
+            "state": {
+                "operational": "heating",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "target": "24°C",
+                "current": "23°C"
+            },
+            "controlIntent": [
+                "set_temp"
+            ],
+            "explain": {
+                "reason": "Morning comfort",
+                "source": "schedule",
+                "override": "none"
+            }
+        },
+        {
+            "id": "appliance_washer",
+            "name": "Washing Machine",
+            "roomId": "bathroom_main",
+            "capabilities": [
+                "appliance",
+                "state_read"
+            ],
+            "state": {
+                "operational": "idle",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "status": "empty"
+            },
+            "controlIntent": [
+                "start_quick"
+            ],
+            "explain": {
+                "reason": "Ready",
+                "source": "device",
+                "override": "none"
+            }
+        },
+        {
+            "id": "appliance_dryer",
+            "name": "Tumble Dryer",
+            "roomId": "bathroom_main",
+            "capabilities": [
+                "appliance",
+                "state_read"
+            ],
+            "state": {
+                "operational": "idle",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "status": "empty"
+            },
+            "controlIntent": [],
+            "explain": {
+                "reason": "Ready",
+                "source": "device",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_hallway_spots",
+            "name": "Hallway Spots",
+            "roomId": "hallway",
+            "capabilities": [
+                "light"
+            ],
+            "state": {
+                "operational": "on",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "60%"
+            },
+            "controlIntent": [
+                "toggle"
+            ],
+            "explain": {
+                "reason": "Motion detected",
+                "source": "sensor",
+                "override": "none"
+            }
+        },
+        {
+            "id": "lock_front_door",
+            "name": "Smart Lock",
+            "roomId": "hallway",
+            "capabilities": [
+                "security",
+                "lock"
+            ],
+            "state": {
+                "operational": "locked",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "battery": "85%"
+            },
+            "controlIntent": [
+                "unlock",
+                "lock"
+            ],
+            "explain": {
+                "reason": "Auto-lock enabled",
+                "source": "system",
+                "override": "none"
+            }
+        },
+        {
+            "id": "camera_doorbell",
+            "name": "Doorbell",
+            "roomId": "hallway",
+            "capabilities": [
+                "camera",
+                "audio"
+            ],
+            "state": {
+                "operational": "idle",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "last_event": "2h ago"
+            },
+            "controlIntent": [
+                "view"
+            ],
+            "explain": {
+                "reason": "Standby",
+                "source": "device",
+                "override": "none"
+            }
+        },
+        {
+            "id": "climate_thermostat_main",
+            "name": "Nest Thermostat",
+            "roomId": "hallway",
+            "capabilities": [
+                "climate",
+                "control"
+            ],
+            "state": {
+                "operational": "heating",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "home_avg": "21.5°C"
+            },
+            "controlIntent": [
+                "set_home_target"
+            ],
+            "explain": {
+                "reason": "Global heating active",
+                "source": "schedule",
+                "override": "none"
+            }
+        },
+        {
+            "id": "bot_vacuum",
+            "name": "Roborock S8",
+            "roomId": "hallway",
+            "capabilities": [
+                "appliance",
+                "cleaning"
+            ],
+            "state": {
+                "operational": "charging",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "battery": "100%",
+                "bin": "empty"
+            },
+            "controlIntent": [
+                "start_clean",
+                "dock"
+            ],
+            "explain": {
+                "reason": "Scheduled for 10:00",
+                "source": "scheduler",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_office_main",
+            "name": "Office Panel",
+            "roomId": "office",
+            "capabilities": [
+                "light",
+                "dimmable"
+            ],
+            "state": {
+                "operational": "off",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "0%"
+            },
+            "controlIntent": [
+                "toggle",
+                "dim"
+            ],
+            "explain": {
+                "reason": "Not in use",
+                "source": "automation",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_office_desk",
+            "name": "Desk Lamp",
+            "roomId": "office",
+            "capabilities": [
+                "light",
+                "color"
+            ],
+            "state": {
+                "operational": "off",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "0%"
+            },
+            "controlIntent": [
+                "toggle",
+                "color"
+            ],
+            "explain": {
+                "reason": "Off",
+                "source": "user",
+                "override": "none"
+            }
+        },
+        {
+            "id": "media_office_speaker",
+            "name": "HomePod",
+            "roomId": "office",
+            "capabilities": [
+                "media",
+                "audio"
+            ],
+            "state": {
+                "operational": "idle",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "status": "paused"
+            },
+            "controlIntent": [
+                "play"
+            ],
+            "explain": {
+                "reason": "Waiting",
+                "source": "user",
+                "override": "none"
+            }
+        },
+        {
+            "id": "sensor_office_co2",
+            "name": "Air Quality Monitor",
+            "roomId": "office",
+            "capabilities": [
+                "sensor",
+                "air_quality"
+            ],
+            "state": {
+                "operational": "active",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "co2": "420ppm",
+                "voc": "low"
+            },
+            "controlIntent": [],
+            "explain": {
+                "reason": "Air is fresh",
+                "source": "sensor",
+                "override": "none"
+            }
+        },
+        {
+            "id": "media_headphones",
+            "name": "Sony XM5",
+            "roomId": "office",
+            "capabilities": [
+                "media",
+                "battery"
+            ],
+            "state": {
+                "operational": "unavailable",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "battery": "unknown"
+            },
+            "controlIntent": [],
+            "explain": {
+                "reason": "Disconnected",
+                "source": "device",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_kids_main",
+            "name": "Kids Ceiling",
+            "roomId": "kids_room",
+            "capabilities": [
+                "light"
+            ],
+            "state": {
+                "operational": "off",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "0%"
+            },
+            "controlIntent": [
+                "toggle"
+            ],
+            "explain": {
+                "reason": "Empty",
+                "source": "automation",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_kids_night",
+            "name": "Night Light",
+            "roomId": "kids_room",
+            "capabilities": [
+                "light",
+                "color"
+            ],
+            "state": {
+                "operational": "off",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "color": "soft_red"
+            },
+            "controlIntent": [
+                "toggle",
+                "color"
+            ],
+            "explain": {
+                "reason": "Daylight time",
+                "source": "schedule",
+                "override": "none"
+            }
+        },
+        {
+            "id": "sensor_kids_monitor",
+            "name": "Baby Monitor",
+            "roomId": "kids_room",
+            "capabilities": [
+                "camera",
+                "audio"
+            ],
+            "state": {
+                "operational": "active",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "noise": "quiet",
+                "temp": "21°C"
+            },
+            "controlIntent": [
+                "view"
+            ],
+            "explain": {
+                "reason": "Monitoring",
+                "source": "system",
+                "override": "none"
+            }
+        },
+        {
+            "id": "sensor_balcony_plant",
+            "name": "Plant Monitor",
+            "roomId": "balcony",
+            "capabilities": [
+                "sensor",
+                "garden"
+            ],
+            "state": {
+                "operational": "active",
+                "health": "ok",
+                "attention": "low"
+            },
+            "readings": {
+                "soil_moisture": "20%",
+                "sunlight": "Direct"
+            },
+            "controlIntent": [],
+            "explain": {
+                "reason": "Needs water soon",
+                "source": "sensor",
+                "override": "none"
+            }
+        },
+        {
+            "id": "light_balcony_festoon",
+            "name": "Festoon Lights",
+            "roomId": "balcony",
+            "capabilities": [
+                "light"
+            ],
+            "state": {
+                "operational": "off",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "brightness": "0%"
+            },
+            "controlIntent": [
+                "toggle"
+            ],
+            "explain": {
+                "reason": "Daylight",
+                "source": "automation",
+                "override": "none"
+            }
+        },
+        {
+            "id": "sensor_utility_power",
+            "name": "Whole Home Power",
+            "roomId": "utility_room",
+            "capabilities": [
+                "sensor",
+                "energy"
+            ],
+            "state": {
+                "operational": "active",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "current_usage": "3.5kW",
+                "daily_total": "12kWh"
+            },
+            "controlIntent": [],
+            "explain": {
+                "reason": "High load (Oven+Heater)",
+                "source": "meter",
+                "override": "none"
+            }
+        },
+        {
+            "id": "sensor_utility_solar",
+            "name": "Solar Inverter",
+            "roomId": "utility_room",
+            "capabilities": [
+                "sensor",
+                "energy"
+            ],
+            "state": {
+                "operational": "generating",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "production": "1.2kW",
+                "efficiency": "45%"
+            },
+            "controlIntent": [],
+            "explain": {
+                "reason": "Partly cloudy",
+                "source": "inverter",
+                "override": "none"
+            }
+        },
+        {
+            "id": "net_router",
+            "name": "UniFi Dream Machine",
+            "roomId": "utility_room",
+            "capabilities": [
+                "network",
+                "system"
+            ],
+            "state": {
+                "operational": "online",
+                "health": "ok",
+                "attention": "none"
+            },
+            "readings": {
+                "wan_latency": "12ms",
+                "clients": "24",
+                "uptime": "14d"
+            },
+            "controlIntent": [
+                "restart"
+            ],
+            "explain": {
+                "reason": "Stable",
+                "source": "system",
+                "override": "none"
+            }
+        }
+    ],
+    "sensors": [
+        {
+            "id": "s_liv_temp",
+            "name": "Living Temp",
+            "roomId": "living_room",
+            "type": "temperature",
+            "value": 21,
+            "unit": "°C",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Comfortable",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "Controlled by thermostat"
+        },
+        {
+            "id": "s_liv_hum",
+            "name": "Living Humidity",
+            "roomId": "living_room",
+            "type": "humidity",
+            "value": 45,
+            "unit": "%",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Optimal",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "Healthy range"
+        },
+        {
+            "id": "s_liv_co2",
+            "name": "Living CO2",
+            "roomId": "living_room",
+            "type": "co2",
+            "value": 600,
+            "unit": "ppm",
+            "lastUpdated": "10m ago",
+            "interpretation": {
+                "meaning": "Fresh",
+                "attention": "none",
+                "trend": "rising"
+            },
+            "explain": "Slight increase due to occupancy"
+        },
+        {
+            "id": "s_liv_pres",
+            "name": "Living Presence",
+            "roomId": "living_room",
+            "type": "presence",
+            "value": true,
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Occupied",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "Motion detected"
+        },
+        {
+            "id": "s_liv_lux",
+            "name": "Living Light",
+            "roomId": "living_room",
+            "type": "light",
+            "value": 450,
+            "unit": "lx",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Bright",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "Daylight + Artificial"
+        },
+        {
+            "id": "s_liv_noise",
+            "name": "Living Noise",
+            "roomId": "living_room",
+            "type": "noise",
+            "value": 45,
+            "unit": "dB",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Quiet conversation",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "TV is off"
+        },
+        {
+            "id": "s_kit_temp",
+            "name": "Kitchen Temp",
+            "roomId": "kitchen",
+            "type": "temperature",
+            "value": 22.5,
+            "unit": "°C",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Warm",
+                "attention": "none",
+                "trend": "rising"
+            },
+            "explain": "Oven/Cooking heat"
+        },
+        {
+            "id": "s_kit_co2",
+            "name": "Kitchen CO2",
+            "roomId": "kitchen",
+            "type": "co2",
+            "value": 850,
+            "unit": "ppm",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Moderate",
+                "attention": "none",
+                "trend": "rising"
+            },
+            "explain": "Cooking activity"
+        },
+        {
+            "id": "s_kit_smoke",
+            "name": "Kitchen Smoke",
+            "roomId": "kitchen",
+            "type": "smoke",
+            "value": false,
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Clear",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "Safety check passed"
+        },
+        {
+            "id": "s_kit_leak",
+            "name": "Sink Leak",
+            "roomId": "kitchen",
+            "type": "leak",
+            "value": false,
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Dry",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "No moisture detected"
+        },
+        {
+            "id": "s_kit_motion",
+            "name": "Kitchen Motion",
+            "roomId": "kitchen",
+            "type": "motion",
+            "value": true,
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Active",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "Persistent movement"
+        },
+        {
+            "id": "s_bed_temp",
+            "name": "Bedroom Temp",
+            "roomId": "bedroom_master",
+            "type": "temperature",
+            "value": 19.5,
+            "unit": "°C",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Cool (Sleep)",
+                "attention": "none",
+                "trend": "falling"
+            },
+            "explain": "Cooling for sleep"
+        },
+        {
+            "id": "s_bed_co2",
+            "name": "Bedroom CO2",
+            "roomId": "bedroom_master",
+            "type": "co2",
+            "value": 500,
+            "unit": "ppm",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Fresh",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "Ventilation active"
+        },
+        {
+            "id": "s_bed_noise",
+            "name": "Bedroom Noise",
+            "roomId": "bedroom_master",
+            "type": "noise",
+            "value": 30,
+            "unit": "dB",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Silent",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "Perfect for rest"
+        },
+        {
+            "id": "s_bed_occ",
+            "name": "Bed Occupancy",
+            "roomId": "bedroom_master",
+            "type": "occupancy",
+            "value": false,
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Empty",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "No weight detected"
+        },
+        {
+            "id": "s_bath_hum",
+            "name": "Bathroom Humidity",
+            "roomId": "bathroom_main",
+            "type": "humidity",
+            "value": 65,
+            "unit": "%",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "High",
+                "attention": "low",
+                "trend": "falling"
+            },
+            "explain": "Post-shower drying"
+        },
+        {
+            "id": "s_bath_leak",
+            "name": "Bath Leak",
+            "roomId": "bathroom_main",
+            "type": "leak",
+            "value": false,
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Dry",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "Secure"
+        },
+        {
+            "id": "s_hall_door",
+            "name": "Front Door Contact",
+            "roomId": "hallway",
+            "type": "door",
+            "value": false,
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Closed",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "Secure"
+        },
+        {
+            "id": "s_hall_mot",
+            "name": "Hall Motion",
+            "roomId": "hallway",
+            "type": "motion",
+            "value": false,
+            "lastUpdated": "5m ago",
+            "interpretation": {
+                "meaning": "Quiet",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "No recent passage"
+        },
+        {
+            "id": "s_off_co2",
+            "name": "Office CO2",
+            "roomId": "office",
+            "type": "co2",
+            "value": 450,
+            "unit": "ppm",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Excellent",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "Fresh air"
+        },
+        {
+            "id": "s_off_net",
+            "name": "Network Quality",
+            "roomId": "office",
+            "type": "network",
+            "value": "Excellent",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "High Speed",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "Low latency (12ms)"
+        },
+        {
+            "id": "s_util_pow",
+            "name": "Total Power",
+            "roomId": "utility_room",
+            "type": "power",
+            "value": 3500,
+            "unit": "W",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "High Load",
+                "attention": "medium",
+                "trend": "rising"
+            },
+            "explain": "Oven + Heater active"
+        },
+        {
+            "id": "s_util_grid",
+            "name": "Grid Status",
+            "roomId": "utility_room",
+            "type": "power",
+            "value": "Online",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Stable",
+                "attention": "none",
+                "trend": "stable"
+            },
+            "explain": "Voltage 230V"
+        },
+        {
+            "id": "s_balc_temp",
+            "name": "Outdoor Temp",
+            "roomId": "balcony",
+            "type": "temperature",
+            "value": 12,
+            "unit": "°C",
+            "lastUpdated": "now",
+            "interpretation": {
+                "meaning": "Cool",
+                "attention": "none",
+                "trend": "falling"
+            },
+            "explain": "Forecast: Rain soon"
+        }
+    ],
+    "issues": [
+        {
+            "id": "issue_plant_water",
+            "category": "maintenance",
+            "attentionLevel": "low",
+            "urgency": "low",
+            "impact": "low",
+            "title": "Balcony Plants Thirsty",
+            "detail": "Soil moisture dropped below 25%.",
+            "evidence": [
+                "Sensor reported 20%"
+            ],
+            "suggestedActions": [
+                "mark_watered"
+            ],
+            "lifecycleState": "open"
+        }
+    ],
+    "recommendations": [
+        {
+            "id": "rec_morning_boost",
+            "title": "Boost Heating?",
+            "why": "It is a chilly morning and the kitchen is active.",
+            "attentionLevel": "low",
+            "confidence": 0.8,
+            "signals": [
+                "temp_outdoor",
+                "occupancy"
+            ],
+            "actions": [
+                "boost_heat",
+                "ignore"
+            ],
+            "autonomous": false
+        }
+    ],
+    "voiceSnapshots": [],
+    "scenarios": {
+        "calm_everything_ok": {
+            "home_mode": "home",
+            "issues_active": [],
+            "things_highlight": [
+                "climate_thermostat_main"
+            ]
+        },
+        "morning_rush": {
+            "home_mode": "home",
+            "issues_active": [],
+            "things_highlight": [
+                "appliance_coffee",
+                "light_kitchen_main"
+            ]
+        }
+    }
+}

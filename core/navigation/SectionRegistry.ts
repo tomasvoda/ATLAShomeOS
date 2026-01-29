@@ -1,7 +1,7 @@
 import { icons } from 'lucide-react';
 
-export type SectionId = 'status' | 'control' | 'voice' | 'insights';
-export type SectionIntent = 'observe' | 'act' | 'interact' | 'analyze';
+export type SectionId = 'status' | 'control' | 'voice' | 'settings';
+export type SectionIntent = 'observe' | 'act' | 'interact' | 'configure';
 
 export interface AppSection {
     id: SectionId;
@@ -49,13 +49,13 @@ export const SECTIONS: Record<SectionId, AppSection> = {
         enabled: true,
         showInNav: true,
     },
-    insights: {
-        id: 'insights',
-        label: 'Insights',
-        path: '/insights',
-        icon: 'Lightbulb',
-        description: 'AI insights and recommendations',
-        intent: 'analyze',
+    settings: {
+        id: 'settings',
+        label: 'Settings',
+        path: '/settings',
+        icon: 'Settings',
+        description: 'System configuration',
+        intent: 'configure',
         order: 4,
         enabled: true,
         showInNav: true,

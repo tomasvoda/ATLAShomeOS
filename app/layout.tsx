@@ -4,7 +4,10 @@ import './globals.css';
 import { AppProvider } from '@/context/AppContext';
 import { PresenceProvider } from '@/context/PresenceContext';
 import { HouseModeProvider } from '@/context/HouseModeContext';
+import { UXDataProvider } from '@/context/UXDataContext';
 import { AppShell } from '@/core/layout/AppShell';
+import { DebugPanel } from '@/ui/DebugPanel';
+import { WorldContextPanel } from '@/ui/components/WorldHeader/WorldContextPanel';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,7 +27,11 @@ export default function RootLayout({
         <AppProvider>
           <PresenceProvider>
             <HouseModeProvider>
-              <AppShell>{children}</AppShell>
+              <UXDataProvider>
+                <AppShell>{children}</AppShell>
+                <WorldContextPanel />
+                <DebugPanel />
+              </UXDataProvider>
             </HouseModeProvider>
           </PresenceProvider>
         </AppProvider>
