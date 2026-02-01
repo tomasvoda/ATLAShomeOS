@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Icon } from '@/ui/primitives/Icon';
 import { cn } from '@/core/utils/cn';
 import { IntentType, ScopeType } from './IntentLens';
@@ -26,20 +27,37 @@ export function TheLens({ intent, scope, label }: TheLensProps) {
         }
     }, [intent]);
 
+    // Weighted visionOS Motion System - Liquid Glass Easing
+    const visionTransition = {
+        ease: [0.22, 0.61, 0.36, 1] as [number, number, number, number],
+        duration: 0.18, // Micro interactions timing
+    };
+
     return (
         <div className="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center">
             {/* Outer Glow / Ring */}
-            <div className={cn(
-                "absolute inset-0 rounded-full border-[1px] opacity-20 scale-110",
-                styles.ring
-            )} />
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 0.2, scale: 1.1 }}
+                transition={visionTransition}
+                className={cn(
+                    "absolute inset-0 rounded-full border-[1px] border-white/5 bg-white/[0.02] will-change-transform",
+                    styles.ring
+                )}
+            />
 
             {/* The Actual Lens Button */}
-            <button
+            <motion.button
+                initial={{ scale: 0.98, opacity: 0.85 }}
+                animate={{
+                    scale: isPressed ? 0.96 : 1,
+                    opacity: 1,
+                }}
+                whileHover={{ scale: 1.01 }}
+                transition={visionTransition}
                 className={cn(
-                    "relative w-56 h-56 md:w-64 md:h-64 rounded-full flex flex-col items-center justify-center transition-all duration-300 shadow-2xl active:scale-95 outline-none",
-                    styles.bg,
-                    isPressed ? "scale-95 shadow-inner" : "hover:scale-[1.02]"
+                    "relative w-56 h-56 md:w-64 md:h-64 rounded-full flex flex-col items-center justify-center shadow-2xl outline-none glass-liquid will-change-transform active-energized",
+                    styles.bg
                 )}
                 onMouseDown={() => setIsPressed(true)}
                 onMouseUp={() => setIsPressed(false)}
@@ -50,35 +68,48 @@ export function TheLens({ intent, scope, label }: TheLensProps) {
                 {/* Drag Indicator Ring (Mock) */}
                 <svg className="absolute inset-0 w-full h-full rotate-[-90deg] pointer-events-none" viewBox="0 0 100 100">
                     <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" strokeWidth="1" className={styles.text} strokeOpacity="0.1" />
-                    <circle
+                    <motion.circle
                         cx="50" cy="50" r="48"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="2"
+                        strokeWidth="1.5"
                         className={styles.text}
                         strokeDasharray="301"
-                        strokeDashoffset={301 - (301 * dragValue) / 100}
+                        animate={{ strokeDashoffset: 301 - (301 * dragValue) / 100 }}
+                        transition={visionTransition}
                         strokeLinecap="round"
                     />
                 </svg>
 
                 {/* Content */}
                 <div className="flex flex-col items-center gap-2 z-10 pointer-events-none">
-                    <Icon name={getIntentIcon(intent)} size={48} className={styles.text} />
+                    <div className="w-16 h-16 rounded-full bg-white/[0.05] group-hover:bg-white/[0.1] flex items-center justify-center text-text-primary transition-colors active-inner-glow">
+                        <Icon name={getIntentIcon(intent)} size={28} strokeWidth={1.5} />
+                    </div>
                     <span className={cn("text-4xl font-light tracking-tighter", styles.text)}>
                         {intent === 'climate' ? '21°' :
                             intent === 'media' ? 'Play' :
                                 intent === 'lights' ? `${dragValue}%` :
                                     'Active'}
                     </span>
-                    <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mt-2">{scope}</span>
+                    <span className="text-xs font-bold uppercase tracking-[0.2em] text-text-secondary opacity-40 mt-2">{scope}</span>
                 </div>
-            </button>
+            </motion.button>
 
             {/* Action Label Float */}
-            <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 text-gray-400 text-sm font-medium animate-in fade-in slide-in-from-top-2">
-                {isPressed ? 'Adjusting...' : label}
-            </div>
+            <AnimatePresence>
+                {!isPressed && (
+                    <motion.div
+                        initial={{ opacity: 0, transform: 'translate3d(0, 6px, 0)' }}
+                        animate={{ opacity: 1, transform: 'translate3d(0, 0, 0)' }}
+                        exit={{ opacity: 0, transform: 'translate3d(0, 6px, 0)' }}
+                        transition={visionTransition}
+                        className="absolute -bottom-16 left-1/2 -translate-x-1/2 text-text-secondary text-[11px] font-bold uppercase tracking-[0.2em] will-change-transform"
+                    >
+                        {label}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }

@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Icon } from '@/ui/primitives/Icon';
 import { cn } from '@/core/utils/cn';
 import { TheLens } from './TheLens';
 import { DeviceCloud } from './DeviceCloud';
 import { useApp } from '@/context/AppContext';
+import { usePresence } from '@/context/PresenceContext';
 
 export type IntentType = 'lights' | 'climate' | 'security' | 'energy' | 'media';
 // Updated Scope Types according to new strict prompt: "Here, This Room, Whole Home" + Custom implies Detail
@@ -17,6 +19,7 @@ interface IntentLensProps {
 }
 
 export function IntentLens({ roomId }: IntentLensProps) {
+    const { activeRoom } = usePresence();
     // 3-STATE MACHINE
     const [viewState, setViewState] = useState<ViewState>('calm');
     const [activeIntent, setActiveIntent] = useState<IntentType | null>(null);
@@ -32,7 +35,7 @@ export function IntentLens({ roomId }: IntentLensProps) {
     const handleIntentSelect = (intent: IntentType) => {
         setActiveIntent(intent);
         setViewState('focused');
-        setActiveScope('here'); // Reset scope on new intent
+        setActiveScope('here');
         setActionActive(true);
     };
 
@@ -47,10 +50,10 @@ export function IntentLens({ roomId }: IntentLensProps) {
 
     const handleBack = () => {
         if (viewState === 'detail') {
-            setViewState('focused'); // Back from Detail -> Focused
+            setViewState('focused');
             setActionActive(true);
         } else if (viewState === 'focused') {
-            setViewState('calm'); // Back from Focused -> Calm
+            setViewState('calm');
             setActiveIntent(null);
             setActionActive(false);
         }
@@ -68,118 +71,156 @@ export function IntentLens({ roomId }: IntentLensProps) {
         }
     }, [activeIntent]);
 
+    // Weighted visionOS Motion System - Liquid Glass Easing
+    const visionTransition = {
+        ease: [0.22, 0.61, 0.36, 1] as [number, number, number, number],
+        duration: 0.32, // Focus changes
+    };
+
     return (
-        <div className="relative w-full h-[calc(100vh-64px)] overflow-hidden flex flex-col font-sans">
-
-            {/* Header / Back Navigation (Visible in Focused/Detail) */}
-            {viewState !== 'calm' && (
-                <div className="absolute top-6 left-6 z-30 animate-in fade-in slide-in-from-top-4 duration-500">
-                    <button
-                        onClick={handleBack}
-                        className="flex items-center gap-3 text-gray-500 hover:text-gray-900 transition-colors group"
-                    >
-                        <div className="w-10 h-10 rounded-full bg-white/60 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-sm group-hover:bg-white/80 transition-all">
-                            <Icon name="ArrowLeft" size={18} />
-                        </div>
-                        <span className="text-sm font-medium tracking-wide capitalize bg-white/40 backdrop-blur px-3 py-1 rounded-full border border-white/20">
-                            {activeIntent}
-                        </span>
-                    </button>
-                </div>
-            )}
-
-            {/* STATE 1: CALM (Default) - Question: "What do I want to change?" */}
-            {viewState === 'calm' && (
-                <div className="flex-1 flex flex-col justify-center px-6 animate-in fade-in zoom-in-95 duration-500">
-                    <h2 className="text-3xl font-light text-gray-900 mb-2 tracking-tight text-center">
-                        {mode === 'Room OS' ? 'Room Controls' : 'Control Center'}
-                    </h2>
-                    <p className="text-center text-gray-400 mb-12 font-light">What do you want to change?</p>
-
-                    <div className="grid grid-cols-2 gap-4 w-full max-w-sm mx-auto">
-                        {(['lights', 'climate', 'security', 'media', 'energy'] as IntentType[]).map(intent => (
-                            <button
-                                key={intent}
-                                onClick={() => handleIntentSelect(intent)}
-                                className={cn(
-                                    "aspect-square rounded-3xl bg-white/40 border border-white/50 shadow-sm hover:shadow-md hover:bg-white/60 transition-all flex flex-col items-center justify-center gap-4 group backdrop-blur-sm",
-                                    intent === 'media' && "col-span-2 aspect-[2/1]" // Distinct media tile
-                                )}
+        <div className="relative w-full min-h-[calc(100vh-64px)] flex flex-col font-sans antialiased">
+            <AnimatePresence>
+                <motion.div
+                    key={activeRoom || 'all'}
+                    initial={{ opacity: 0, transform: 'translate3d(0, 4px, 0)' }}
+                    animate={{ opacity: 1, transform: 'translate3d(0, 0, 0)' }}
+                    exit={{ opacity: 0, transform: 'translate3d(0, -4px, 0)' }}
+                    transition={visionTransition}
+                    className="flex-1 flex flex-col relative will-change-[transform,opacity]"
+                >
+                    {/* Header / Back Navigation */}
+                    <AnimatePresence>
+                        {viewState !== 'calm' && (
+                            <motion.div
+                                initial={{ opacity: 0, transform: 'translate3d(0, -20px, 0)' }}
+                                animate={{ opacity: 1, transform: 'translate3d(0, 0, 0)' }}
+                                exit={{ opacity: 0, transform: 'translate3d(0, -20px, 0)' }}
+                                transition={visionTransition}
+                                className="absolute top-8 left-8 z-30 will-change-transform"
                             >
-                                <div className="w-14 h-14 rounded-full bg-white/50 group-hover:bg-white flex items-center justify-center text-gray-600 transition-colors shadow-inner">
-                                    <Icon name={getIntentIcon(intent)} size={26} />
-                                </div>
-                                <span className="font-medium text-gray-700 capitalize tracking-wide">{intent}</span>
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            {/* STATE 2: FOCUSED ACTION (The Lens) */}
-            {viewState === 'focused' && activeIntent && (
-                <div className="flex-1 flex flex-col items-center justify-center animate-in fade-in slide-in-from-bottom-12 duration-500 w-full relative">
-
-                    {/* The Lens (Primary Control) */}
-                    <div className="scale-100 transition-transform duration-500 mb-8">
-                        <TheLens
-                            intent={activeIntent}
-                            scope={activeScope}
-                            label={actionLabel}
-                        />
-                    </div>
-
-                    {/* Controls Layer */}
-                    <div className="flex flex-col items-center gap-6 w-full max-w-md px-6">
-
-                        {/* Scope Selector */}
-                        <div className="flex p-1 rounded-full bg-gray-100/50 backdrop-blur-md border border-white/20 shadow-inner gap-1">
-                            {[
-                                { id: 'here', label: 'Here' },
-                                { id: 'room', label: 'This Room' },
-                                { id: 'home', label: 'Whole Home' },
-                                { id: 'custom', label: 'Custom...' }
-                            ].map(scope => (
                                 <button
-                                    key={scope.id}
-                                    onClick={() => handleScopeSelect(scope.id as ScopeType)}
-                                    className={cn(
-                                        "px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300",
-                                        activeScope === scope.id
-                                            ? "bg-white text-gray-900 shadow-sm scale-100"
-                                            : "text-gray-400 hover:text-gray-600 scale-95"
-                                    )}
+                                    onClick={handleBack}
+                                    className="flex items-center gap-4 text-text-secondary hover:text-text-primary transition-all group"
                                 >
-                                    {scope.label}
+                                    <div className="w-12 h-12 rounded-full glass-elevated flex items-center justify-center shadow-lg group-hover:scale-110 active:scale-95 transition-all">
+                                        <Icon name="ArrowLeft" size={20} />
+                                    </div>
+                                    <span className="text-[13px] font-medium tracking-widest uppercase opacity-60 bg-text-primary/5 backdrop-blur px-4 py-1.5 rounded-full border border-glass-border">
+                                        {activeIntent}
+                                    </span>
                                 </button>
-                            ))}
-                        </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
-                        {/* Duration Selector */}
-                        <div className="flex items-center justify-center gap-2 w-full">
-                            <div className="flex items-center gap-1 bg-white/30 backdrop-blur px-2 py-2 rounded-2xl border border-white/40">
-                                {['Now', '1h', 'Morning'].map(d => (
-                                    <button
-                                        key={d}
-                                        onClick={() => setDuration(d)}
-                                        className={cn(
-                                            "px-4 py-2 rounded-xl text-sm transition-all duration-200",
-                                            duration === d
-                                                ? "bg-white text-gray-900 font-medium shadow-sm"
-                                                : "text-gray-500 hover:text-gray-800"
-                                        )}
-                                    >
-                                        {d}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+                    {/* DUAL-MOUNT VIEW STATES */}
+                    <AnimatePresence>
+                        {viewState === 'calm' && (
+                            <motion.div
+                                key="calm"
+                                initial={{ opacity: 0.96, filter: 'blur(6px)', y: 4 }}
+                                animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+                                exit={{ opacity: 0.96, filter: 'blur(6px)', y: 4 }}
+                                transition={visionTransition}
+                                className="flex-1 flex flex-col justify-center px-6 will-change-[transform,opacity,filter]"
+                            >
+                                <div className="text-center space-y-2 mb-16">
+                                    <h2 className="text-4xl font-light text-text-primary tracking-tight">
+                                        {mode === 'Room OS' ? 'Room Controls' : 'Control Center'}
+                                    </h2>
+                                    <p className="text-text-secondary opacity-40 font-light text-lg tracking-wide uppercase text-[10px]">What do you want to change?</p>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4 w-full max-sm mx-auto">
+                                    {(['lights', 'climate', 'security', 'media', 'energy'] as IntentType[]).map(intent => {
+                                        const isActive = activeIntent === intent;
+                                        return (
+                                            <button
+                                                key={intent}
+                                                onClick={() => handleIntentSelect(intent)}
+                                                className={cn(
+                                                    "aspect-square rounded-[2.2rem] glass-liquid hover:bg-white/[0.08] transition-all duration-320 flex flex-col items-center justify-center gap-5 group shadow-sm hover:shadow-2xl active:scale-95",
+                                                    intent === 'media' && "col-span-2 aspect-[2.2/1]",
+                                                    isActive && "active-energized"
+                                                )}
+                                            >
+                                                <div className="w-16 h-16 rounded-full bg-white/[0.05] group-hover:bg-white/[0.1] flex items-center justify-center text-text-primary transition-colors inner-glow">
+                                                    <Icon name={getIntentIcon(intent)} size={28} strokeWidth={1.5} />
+                                                </div>
+                                                <span className="text-xs font-semibold text-text-primary opacity-60 group-hover:opacity-100 uppercase tracking-[0.15em]">{intent}</span>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {viewState === 'focused' && activeIntent && (
+                            <motion.div
+                                key="focused"
+                                initial={{ opacity: 0.96, filter: 'blur(6px)', y: 4 }}
+                                animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+                                exit={{ opacity: 0.96, filter: 'blur(6px)', y: 4 }}
+                                transition={visionTransition}
+                                className="absolute inset-0 flex flex-col items-center justify-center w-full will-change-[transform,opacity,filter]"
+                            >
+                                {/* The Lens (Primary Control) */}
+                                <div className="mb-12">
+                                    <TheLens
+                                        intent={activeIntent}
+                                        scope={activeScope}
+                                        label={actionLabel}
+                                    />
+                                </div>
+
+                                {/* Controls Layer */}
+                                <div className="flex flex-col items-center gap-8 w-full max-w-md px-6">
+                                    <div className="flex p-1.5 rounded-full glass-dock shadow-2xl gap-1.5">
+                                        {[
+                                            { id: 'here', label: 'Here' },
+                                            { id: 'room', label: 'Room' },
+                                            { id: 'home', label: 'Home' },
+                                            { id: 'custom', label: 'Custom' }
+                                        ].map(scope => (
+                                            <button
+                                                key={scope.id}
+                                                onClick={() => handleScopeSelect(scope.id as ScopeType)}
+                                                className={cn(
+                                                    "px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-320 active:scale-95",
+                                                    activeScope === scope.id
+                                                        ? "text-background active-energized !bg-text-primary !scale-100"
+                                                        : "text-text-secondary hover:text-text-primary hover:bg-white/[0.05] scale-95"
+                                                )}
+                                            >
+                                                {scope.label}
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    <div className="flex p-1 rounded-2xl glass-surface/50">
+                                        {['Now', '1h', 'Morning'].map(d => (
+                                            <button
+                                                key={d}
+                                                onClick={() => setDuration(d)}
+                                                className={cn(
+                                                    "px-5 py-2 rounded-xl text-xs font-medium transition-all duration-200",
+                                                    duration === d
+                                                        ? "bg-text-primary/10 text-text-primary shadow-sm"
+                                                        : "text-text-secondary hover:text-text-primary opacity-40 hover:opacity-100"
+                                                )}
+                                            >
+                                                {d}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
+            </AnimatePresence>
 
             {/* STATE 3: DETAIL (Device Cloud Overlay) */}
-            {/* The ONLY place devices are visible */}
             <DeviceCloud
                 isOpen={viewState === 'detail'}
                 onClose={() => handleBack()}

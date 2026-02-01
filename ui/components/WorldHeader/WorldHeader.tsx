@@ -52,22 +52,22 @@ export function WorldHeader() {
 
     // Styles based on Attention Level
     const indicatorColor = {
-        none: 'bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.3)]',
-        low: 'bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.3)]',
-        medium: 'bg-orange-400 shadow-[0_0_12px_rgba(251,146,60,0.4)]',
-        high: 'bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.5)] animate-pulse',
-        critical: 'bg-red-600 shadow-[0_0_20px_rgba(220,38,38,0.6)] animate-pulse',
+        none: 'bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.4)]',
+        low: 'bg-blue-400 shadow-[0_0_12px_rgba(96,165,250,0.4)]',
+        medium: 'bg-orange-400 shadow-[0_0_16px_rgba(251,146,60,0.5)]',
+        high: 'bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.6)] animate-pulse',
+        critical: 'bg-red-600 shadow-[0_0_24px_rgba(220,38,38,0.7)] animate-pulse',
     };
 
-    const containerStyles = attentionLevel === 'critical' ? 'bg-red-50 border-red-100' :
-        attentionLevel === 'high' ? 'bg-red-50/50 border-red-100/50' :
-            'bg-white/80 backdrop-blur-xl border-white/20';
+    const containerStyles = attentionLevel === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-500' :
+        attentionLevel === 'high' ? 'bg-red-500/5 border-red-500/10 text-red-400' :
+            'glass-liquid';
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 flex justify-center py-6 pointer-events-none">
+        <header className="fixed top-0 left-0 right-0 z-50 flex justify-center py-8 pointer-events-none">
             <button
                 className={cn(
-                    "pointer-events-auto flex items-center gap-3 px-5 py-2.5 rounded-full border shadow-sm transition-all duration-500 hover:scale-[1.02] active:scale-95 cursor-pointer outline-none",
+                    "pointer-events-auto flex items-center gap-3 px-6 py-2.5 rounded-full border shadow-2xl transition-all duration-500 hover:scale-[1.02] active:scale-95 cursor-pointer outline-none",
                     containerStyles
                 )}
                 onClick={handleClick}
@@ -82,12 +82,12 @@ export function WorldHeader() {
                 <div className={cn("w-2 h-2 rounded-full transition-all duration-700", indicatorColor[attentionLevel])} />
 
                 {/* The Sentence */}
-                <div className="flex items-center gap-1.5 text-sm font-medium text-gray-600 tracking-wide antialiased">
-                    <span className="capitalize text-gray-900">{activeHomeMode}</span>
-                    <span className="text-gray-300 font-light">|</span>
-                    <span className="capitalize">{dayPart}</span>
-                    <span className="text-gray-300 font-light">|</span>
-                    <span className="opacity-80">{presenceText}</span>
+                <div className="flex items-center gap-2 text-[13px] font-medium tracking-wide antialiased">
+                    <span className="capitalize text-text-primary">{activeHomeMode}</span>
+                    <span className="opacity-20 font-light">|</span>
+                    <span className="capitalize text-text-secondary">{dayPart}</span>
+                    <span className="opacity-20 font-light">|</span>
+                    <span className="opacity-60 text-text-primary font-light">{presenceText}</span>
                 </div>
             </button>
         </header>

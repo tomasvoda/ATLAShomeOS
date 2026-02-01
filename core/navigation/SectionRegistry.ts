@@ -31,7 +31,7 @@ export const SECTIONS: Record<SectionId, AppSection> = {
         id: 'control',
         label: 'Control',
         path: '/control',
-        icon: 'LayoutGrid',
+        icon: 'SlidersHorizontal',
         description: 'Home control interface',
         intent: 'act',
         order: 2,

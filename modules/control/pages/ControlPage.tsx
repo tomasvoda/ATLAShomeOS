@@ -26,100 +26,132 @@ export function ControlPage({ room }: { room?: string }) {
     }, [activeThings]);
 
     return (
-        <ResponsiveContainer className="py-8 space-y-10">
+        <ResponsiveContainer className="py-12 space-y-12 pb-32">
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between pb-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">Control Center</h1>
-                    <p className="text-gray-500 text-lg mt-1">Manual Override & Systems</p>
+                    <h1 className="text-4xl font-light text-text-primary tracking-tight">Control Center</h1>
+                    <p className="text-text-secondary opacity-40 text-[13px] uppercase tracking-[0.2em] font-medium mt-1.5">Manual Override & Systems</p>
                 </div>
-                {/* Global Action Button Example */}
-                <Button variant="outline" className="gap-2">
-                    <Icon name="Power" size={16} /> All Off
+                <Button variant="ghost" className="gap-2.5 glass-surface border-glass-border/10 px-5">
+                    <Icon name="Power" size={16} className="text-red-500" />
+                    <span className="text-[11px] font-bold uppercase tracking-widest">All Off</span>
                 </Button>
             </div>
 
             {/* LIGHTS SECTION */}
-            <section className="space-y-4">
-                <div className="flex items-center gap-3 border-b border-gray-100 pb-2">
-                    <Icon name="Lightbulb" size={24} className="text-amber-500" />
-                    <h2 className="text-xl font-medium text-gray-900">Lights</h2>
-                    <span className="text-sm text-gray-400 bg-gray-50 px-2 rounded-full">{capabilities.lights.filter(l => l.state.operational === 'on').length} On</span>
+            <section className="space-y-6">
+                <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full glass-surface flex items-center justify-center">
+                        <Icon name="Lightbulb" size={20} className="text-amber-400" />
+                    </div>
+                    <div className="flex-1 flex items-baseline gap-3">
+                        <h2 className="text-xl font-medium text-text-primary">Lights</h2>
+                        <span className="text-[10px] font-bold text-text-secondary opacity-30 uppercase tracking-widest">{capabilities.lights.filter(l => l.state.operational === 'on').length} active</span>
+                    </div>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                     {capabilities.lights.map(thing => (
-                        <ControlTile key={thing.id} thing={thing} icon="Lightbulb" />
+                        <ControlTile key={thing.id} thing={thing} icon="Lightbulb" activeColor="text-amber-400" accentColor="bg-amber-400/20 shadow-[0_0_20px_rgba(251,191,36,0.15)]" />
                     ))}
                 </div>
             </section>
 
             {/* CLIMATE SECTION */}
-            <section className="space-y-4">
-                <div className="flex items-center gap-3 border-b border-gray-100 pb-2">
-                    <Icon name="Thermometer" size={24} className="text-blue-500" />
-                    <h2 className="text-xl font-medium text-gray-900">Climate</h2>
+            <section className="space-y-6">
+                <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full glass-surface flex items-center justify-center">
+                        <Icon name="Thermometer" size={20} className="text-blue-400" />
+                    </div>
+                    <div className="flex-1">
+                        <h2 className="text-xl font-medium text-text-primary">Climate</h2>
+                    </div>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                     {capabilities.climate.map(thing => (
-                        <ControlTile key={thing.id} thing={thing} icon="Thermometer" />
+                        <ControlTile key={thing.id} thing={thing} icon="Thermometer" activeColor="text-blue-400" accentColor="bg-blue-400/20 shadow-[0_0_20px_rgba(96,165,250,0.15)]" />
                     ))}
                 </div>
             </section>
 
             {/* SECURITY SECTION */}
-            <section className="space-y-4">
-                <div className="flex items-center gap-3 border-b border-gray-100 pb-2">
-                    <Icon name="Shield" size={24} className="text-emerald-500" />
-                    <h2 className="text-xl font-medium text-gray-900">Security</h2>
+            <section className="space-y-6">
+                <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full glass-surface flex items-center justify-center">
+                        <Icon name="Shield" size={20} className="text-emerald-400" />
+                    </div>
+                    <div className="flex-1">
+                        <h2 className="text-xl font-medium text-text-primary">Security</h2>
+                    </div>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                     {capabilities.security.map(thing => (
-                        <ControlTile key={thing.id} thing={thing} icon="Lock" />
+                        <ControlTile key={thing.id} thing={thing} icon="Lock" activeColor="text-emerald-400" accentColor="bg-emerald-400/20 shadow-[0_0_20px_rgba(52,211,153,0.15)]" />
                     ))}
                 </div>
             </section>
 
             {/* MEDIA SECTION */}
-            <section className="space-y-4">
-                <div className="flex items-center gap-3 border-b border-gray-100 pb-2">
-                    <Icon name="Tv" size={24} className="text-purple-500" />
-                    <h2 className="text-xl font-medium text-gray-900">Media</h2>
+            <section className="space-y-6">
+                <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full glass-surface flex items-center justify-center">
+                        <Icon name="Tv" size={20} className="text-purple-400" />
+                    </div>
+                    <div className="flex-1">
+                        <h2 className="text-xl font-medium text-text-primary">Media</h2>
+                    </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Active Media Card */}
                     {activeMedia.isPlaying ? (
-                        <div className="bg-gray-900 rounded-xl p-6 text-white shadow-lg flex items-center gap-6">
-                            <div className="w-16 h-16 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center shadow-inner">
-                                <Icon name="Music" size={32} className="text-white" />
+                        <div className="relative glass-elevated rounded-[2.5rem] p-8 shadow-2xl flex items-center gap-8 overflow-hidden group">
+                            {/* Animated Background Pulse */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+                            <div className="w-20 h-20 glass-surface rounded-2xl flex items-center justify-center shadow-inner relative z-10 shrink-0">
+                                <Icon name="Music" size={32} className="text-purple-400" />
+                                <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center">
+                                    <div className="w-2.5 h-2.5 flex gap-0.5 items-end">
+                                        <div className="w-0.5 bg-white h-2 animate-pulse" />
+                                        <div className="w-0.5 bg-white h-3 animate-pulse delay-75" />
+                                        <div className="w-0.5 bg-white h-1.5 animate-pulse delay-150" />
+                                    </div>
+                                </div>
                             </div>
-                            <div className="flex-1">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="text-xs font-bold bg-white/20 px-2 py-0.5 rounded text-white uppercase tracking-wider">
+
+                            <div className="flex-1 relative z-10 min-w-0">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <span className="text-[9px] font-bold text-background bg-text-primary px-2.5 py-1 rounded-full uppercase tracking-[0.15em]">
                                         {activeMedia.source}
                                     </span>
-                                    <span className="text-xs text-gray-400">• {activeMedia.mood}</span>
+                                    <span className="text-[10px] text-text-secondary font-medium opacity-40 uppercase tracking-widest">{activeMedia.mood}</span>
                                 </div>
-                                <h3 className="font-bold text-xl">{activeMedia.title}</h3>
-                                <p className="text-gray-400">{activeMedia.artist}</p>
+                                <h3 className="font-medium text-2xl text-text-primary truncate tracking-tight">{activeMedia.title}</h3>
+                                <p className="text-text-secondary opacity-60 text-base font-light truncate">{activeMedia.artist}</p>
                             </div>
-                            <div className="flex flex-col items-center gap-2">
-                                <button className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
-                                    <Icon name="Pause" size={20} />
+
+                            <div className="flex flex-col items-center gap-4 relative z-10">
+                                <button className="w-14 h-14 rounded-full glass-surface flex items-center justify-center hover:scale-110 active:scale-90 transition-all shadow-xl group/btn">
+                                    <Icon name="Pause" size={24} className="text-text-primary group-hover/btn:text-purple-400 transition-colors" />
                                 </button>
-                                <span className="text-xs font-mono text-gray-500">Vol {activeMedia.volume}%</span>
+                                <div className="flex items-center gap-1.5 opacity-40">
+                                    <Icon name="Volume2" size={10} />
+                                    <span className="text-[10px] font-bold uppercase tracking-tighter">{activeMedia.volume}%</span>
+                                </div>
                             </div>
                         </div>
                     ) : (
-                        <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-8 flex flex-col items-center justify-center text-gray-400">
-                            <Icon name="Music" size={32} className="mb-2 opacity-50" />
-                            <p>No Media Playing</p>
+                        <div className="glass-surface border-dashed border-glass-border/20 rounded-[2.5rem] p-12 flex flex-col items-center justify-center text-text-secondary/40">
+                            <Icon name="Music" size={32} className="mb-4 opacity-20" />
+                            <p className="text-xs font-bold uppercase tracking-widest">No Media Playing</p>
                         </div>
                     )}
 
                     {/* Media Devices Grid */}
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 gap-4">
                         {capabilities.media.map(thing => (
-                            <ControlTile key={thing.id} thing={thing} icon="Tv" />
+                            <ControlTile key={thing.id} thing={thing} icon="Tv" activeColor="text-purple-400" accentColor="bg-purple-400/20" />
                         ))}
                     </div>
                 </div>
@@ -129,7 +161,7 @@ export function ControlPage({ room }: { room?: string }) {
     );
 }
 
-function ControlTile({ thing, icon }: { thing: any, icon: any }) {
+function ControlTile({ thing, icon, activeColor = "text-blue-400", accentColor = "bg-blue-400/20" }: { thing: any, icon: any, activeColor?: string, accentColor?: string }) {
     const isOn = thing.state.operational === 'on' || thing.state.operational === 'heating' || thing.state.operational === 'cooling' || thing.state.operational === 'playing';
     const isLocked = thing.state.operational === 'locked';
 
@@ -138,25 +170,44 @@ function ControlTile({ thing, icon }: { thing: any, icon: any }) {
 
     return (
         <button className={cn(
-            "flex flex-col items-center justify-center aspect-square rounded-xl transition-all duration-200 border-2 outline-none focus:ring-2 focus:ring-blue-500/50",
+            "flex flex-col items-center justify-center aspect-square rounded-[2rem] transition-all duration-300 outline-none active:scale-95 group relative overflow-hidden",
             isActive
-                ? "bg-white border-blue-500 shadow-md ring-1 ring-blue-500/20"
-                : "bg-gray-50 border-transparent hover:bg-white hover:border-gray-200 hover:shadow-sm"
+                ? cn("glass-elevated ring-1 ring-white/10", accentColor)
+                : "glass-surface hover:bg-text-primary/[0.03] border-glass-border/5"
         )}>
-            <Icon
-                name={icon}
-                size={28}
-                className={cn(
-                    "mb-3 transition-colors",
-                    isActive ? "text-blue-600" : "text-gray-400"
-                )}
-            />
-            <span className={cn("font-medium text-sm px-2 truncate w-full text-center", isActive ? "text-gray-900" : "text-gray-500")}>
-                {thing.name}
-            </span>
-            <span className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mt-1">
-                {thing.state.operational}
-            </span>
+            <div className={cn(
+                "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 mb-4",
+                isActive ? "bg-text-primary/10 shadow-inner" : "bg-text-primary/5 group-hover:bg-text-primary/10"
+            )}>
+                <Icon
+                    name={icon}
+                    size={24}
+                    strokeWidth={isActive ? 2 : 1.5}
+                    className={cn(
+                        "transition-all duration-500",
+                        isActive ? activeColor : "text-text-secondary opacity-40 group-hover:opacity-100"
+                    )}
+                />
+            </div>
+            <div className="flex flex-col items-center gap-1.5 px-4">
+                <span className={cn(
+                    "font-medium text-[13px] tracking-tight truncate w-full text-center transition-colors duration-300",
+                    isActive ? "text-text-primary" : "text-text-secondary opacity-60 group-hover:opacity-100"
+                )}>
+                    {thing.name}
+                </span>
+                <span className={cn(
+                    "text-[9px] uppercase tracking-[0.15em] font-bold transition-opacity duration-300",
+                    isActive ? "opacity-100 text-text-primary/50" : "opacity-20"
+                )}>
+                    {thing.state.operational}
+                </span>
+            </div>
+
+            {/* Active Indicator Dot */}
+            {isActive && (
+                <div className={cn("absolute top-5 right-5 w-1.5 h-1.5 rounded-full", activeColor.replace('text-', 'bg-'))} />
+            )}
         </button>
     )
 }
