@@ -33,7 +33,7 @@ export default function SettingsPage() {
     };
 
     return (
-        <div className="min-h-screen bg-background text-text-primary flex flex-col font-sans antialiased p-8 lg:p-12 animate-in fade-in duration-1000">
+        <div className="h-full w-full bg-background text-text-primary flex flex-col font-sans antialiased p-8 lg:p-12 pt-24 pb-40 animate-in fade-in duration-1000 overflow-y-auto relative z-10">
             <header className="flex items-center gap-6 mb-16">
                 <button
                     onClick={() => {

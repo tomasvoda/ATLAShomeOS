@@ -70,7 +70,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     };
 
     return (
-        <div className="min-h-screen bg-background text-foreground flex flex-col relative font-sans antialiased transition-colors duration-700">
+        <div className="h-[100dvh] w-full overflow-hidden bg-background text-foreground flex flex-col relative font-sans antialiased transition-colors duration-700">
             <WorldHeader />
 
             {/* CONTENT AREA with Liquid Flow Transition */}
@@ -84,7 +84,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                         duration: 0.24,
                         ease: [0.22, 0.61, 0.36, 1], // Liquid Glass Easing
                     }}
-                    className="flex-1 relative z-0 pt-20 pb-40 will-change-[transform,opacity,filter]"
+                    className="flex-1 relative z-0 overflow-hidden will-change-[transform,opacity,filter]"
                 >
                     <FrozenRouter>{children}</FrozenRouter>
                 </motion.main>

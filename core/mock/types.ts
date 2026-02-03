@@ -1,5 +1,5 @@
 export type AttentionLevel = 'none' | 'low' | 'medium' | 'high' | 'critical';
-export type ThingState = 'off' | 'on' | 'idle' | 'busy' | 'transitioning' | 'unavailable' | 'locked' | 'heating' | 'cooling' | 'closed' | 'open' | 'recording';
+export type ThingState = 'off' | 'on' | 'idle' | 'busy' | 'transitioning' | 'unavailable' | 'locked' | 'heating' | 'cooling' | 'closed' | 'open' | 'recording' | 'playing' | 'paused';
 
 export interface UXHomeHealth {
     status: string;
